@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = TabulaRasa::VERSION
   spec.authors       = ["RSL"]
   spec.email         = ["sconds@gmail.com"]
-  spec.description   = %q{An opinionated yet simple table generator for ActionPack/Rails}
-  spec.summary       = %q{An opinionated yet simple table generator for ActionPack/Rails}
+  spec.description   = %q{An opinionated yet simple table generator for Rails}
+  spec.summary       = %q{An opinionated yet simple table generator for Rails}
   spec.homepage      = "https://github.com/rsl/tabula_rasa"
   spec.license       = "MIT"
 
