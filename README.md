@@ -8,7 +8,7 @@ TabulaRasa is designed to leverage ActiveRecord::Relation instances and conventi
 
 <sup>1</sup> TabulaRasa really only relies on ActiveRecord and ActionView/ActionPack so you could use in a non-Rails stack that had those two elements but it seemed silly to differentiate this in the summary sentence.
 
-<sup>1</sup> These conventions may only be my own. Time will tell.
+<sup>2</sup> These conventions may only be my own. Time will tell.
 
 ## Installation
 
