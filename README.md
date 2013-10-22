@@ -1,6 +1,6 @@
 # TabulaRasa
 
-An opinionate yet simple table generator for Rails
+An opinionated yet simple table generator for Rails
 
 ## Installation
 
