@@ -1,14 +1,14 @@
 # TabulaRasa
 
-An opinionated yet simple table generator for Rails\*[^fn-rails].
+An opinionated yet simple table generator for Rails<sup>1</sup>.
 
-TabulaRasa is designed to leverage ActiveRecord::Relation instances and conventions**[^fn-conventions] to make table generation a snap but still readable and editable.
+TabulaRasa is designed to leverage ActiveRecord::Relation instances and conventions<sup>2</sup> to make table generation a snap but still readable and editable.
 
 ## Footnotes
 
-[^fn-rails]: \* TabulaRasa really only relies on ActiveRecord and ActionView/ActionPack so you could use in a non-Rails stack that had those two elements but it seemed silly to differentiate this in the summary sentence.
+<sup>1</sup> TabulaRasa really only relies on ActiveRecord and ActionView/ActionPack so you could use in a non-Rails stack that had those two elements but it seemed silly to differentiate this in the summary sentence.
 
-[^fn-conventions]: ** These conventions may only be my own. Time will tell.
+<sup>1</sup> These conventions may only be my own. Time will tell.
 
 ## Installation
 
