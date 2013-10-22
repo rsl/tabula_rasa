@@ -8,9 +8,9 @@ Gem::Specification.new do |spec|
   spec.version       = TabulaRasa::VERSION
   spec.authors       = ["RSL"]
   spec.email         = ["sconds@gmail.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
-  spec.homepage      = ""
+  spec.description   = %q{An opinionated yet simple table generator for ActionPack/Rails}
+  spec.summary       = %q{An opinionated yet simple table generator for ActionPack/Rails}
+  spec.homepage      = "https://github.com/rsl/tabula_rasa"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
