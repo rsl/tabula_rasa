@@ -1,14 +1,14 @@
 # TabulaRasa
 
-An opinionated yet simple table generator for Rails<sup>1</sup>.
+An opinionated yet simple table generator for Rails<sup><a href='#rails-footnote'>1</a></sup>.
 
-TabulaRasa is designed to leverage ActiveRecord::Relation instances and conventions<sup>2</sup> to make table generation a snap but still readable and editable.
+TabulaRasa is designed to leverage ActiveRecord::Relation instances and conventions<sup><a href='#conventions-footnote'>2</a></sup> to make table generation a snap but still readable and editable.
 
 ## Footnotes
 
-<sup>1</sup> TabulaRasa really only relies on ActiveRecord and ActionView/ActionPack so you could use in a non-Rails stack that had those two elements but it seemed silly to differentiate this in the summary sentence.
+<div id='rails-footnote'><sup>1</sup> TabulaRasa really only relies on ActiveRecord and ActionView/ActionPack so you could use in a non-Rails stack that had those two elements but it seemed silly to differentiate this in the summary sentence.</div>
 
-<sup>2</sup> These conventions may only be my own. Time will tell.
+<div id='conventions-footnote'><sup>2</sup> These conventions may only be my own. Time will tell.</div>
 
 ## Installation
 
