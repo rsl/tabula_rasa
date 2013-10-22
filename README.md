@@ -1,6 +1,14 @@
 # TabulaRasa
 
-An opinionated yet simple table generator for Rails
+An opinionated yet simple table generator for Rails*.
+
+TabulaRasa is designed to leverage ActiveRecord::Relation instances and conventions** to make table generation a snap but still readable and editable.
+
+NOTES:
+
+* TabulaRasa really only relies on ActiveRecord and ActionView/ActionPack so you could use in a non-Rails stack that had those two elements but it seemed silly to differentiate this in the summary sentence.
+
+** These conventions may only be my own. Time will tell.
 
 ## Installation
 
