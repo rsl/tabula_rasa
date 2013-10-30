@@ -30,6 +30,12 @@ TODO: Write usage instructions here
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
 
+## TODO
+
+* Write usage instructions
+* Support for 'zebra-striping'
+* TD dom_id and dom_class
+
 ## Footnotes
 
 <sup>1</sup> TabulaRasa really only relies on ActiveRecord and ActionView/ActionPack so you could use in a non-Rails stack that had those two elements but it seemed silly to differentiate this in the summary sentence.
