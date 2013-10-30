@@ -1,4 +1,4 @@
-# TabulaRasa
+# TabulaRasa [![Code Climate](https://codeclimate.com/github/rsl/tabula_rasa.png)](https://codeclimate.com/github/rsl/tabula_rasa)
 
 An opinionated yet simple table generator for Rails<sup>1</sup>.
 
