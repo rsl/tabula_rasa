@@ -22,9 +22,9 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake"
 
   # My dependencies
-  spec.add_development_dependency 'minitest'
-  spec.add_development_dependency 'actionpack'
-  spec.add_development_dependency 'activerecord'
-  spec.add_development_dependency 'nokogiri'
-  spec.add_development_dependency 'sqlite3'
+  spec.add_development_dependency 'minitest', '4.7.5'
+  spec.add_development_dependency 'actionpack', '4.0.0'
+  spec.add_development_dependency 'activerecord', '4.0.0'
+  spec.add_development_dependency 'nokogiri', '1.6.0'
+  spec.add_development_dependency 'sqlite3', '1.3.8'
 end
