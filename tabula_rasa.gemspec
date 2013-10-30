@@ -20,4 +20,11 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler", "~> 1.3"
   spec.add_development_dependency "rake"
+
+  # My dependencies
+  spec.add_development_dependency 'minitest'
+  spec.add_development_dependency 'actionpack'
+  spec.add_development_dependency 'activerecord'
+  spec.add_development_dependency 'nokogiri'
+  spec.add_development_dependency 'sqlite3'
 end
