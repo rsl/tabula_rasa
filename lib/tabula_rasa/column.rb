@@ -63,6 +63,7 @@ module TabulaRasa
       if value.respond_to?(:call)
         value.call(instance)
       else
+        # TODO: Make truncation optional
         truncate value.to_s
       end
     end
