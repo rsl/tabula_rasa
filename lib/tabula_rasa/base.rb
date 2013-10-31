@@ -1,10 +1,11 @@
+require 'tabula_rasa/row'
 require 'tabula_rasa/column'
 
 module TabulaRasa
   class Base
     attr_reader :collection
 
-    delegate :content_tag, :safe_join, to: :view
+    delegate :content_tag, :cycle, :safe_join, to: :view
 
     def initialize(collection, view, options = {}, &block)
       raise ArgumentError, 'TabulaRasa only works on ActiveRecord Relation instances' unless collection.is_a?(ActiveRecord::Relation)
@@ -14,6 +15,7 @@ module TabulaRasa
       @klass = collection.klass
       @columns = []
       yield self if block_given?
+      ensure_row
     end
 
     def render
@@ -23,6 +25,11 @@ module TabulaRasa
 
     def column(*args, &block)
       @columns << Column.new(self, *args, &block)
+    end
+
+    def row(options = {}, &block)
+      raise ArgumentError, 'Row definition cannot be called more than once' if @row.present?
+      @row = Row.new(self, options, &block)
     end
 
   private
@@ -49,7 +56,7 @@ module TabulaRasa
 
     def collection_body
       rows = collection.map do |member|
-        content_tag :tr do
+        content_tag :tr, @row.options do
           cells = columns.map do |column|
             column.body_content_for member
           end
@@ -69,6 +76,10 @@ module TabulaRasa
 
     def table_options
       options.except :head, :body
+    end
+
+    def ensure_row
+      @row ||= Row.new(self)
     end
   end
 end

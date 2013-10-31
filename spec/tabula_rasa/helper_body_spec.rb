@@ -35,8 +35,31 @@ describe TabulaRasa::Helpers, 'Head Specs' do
     end
   end
 
-  # NOTE: For now, I don't see the point of adding attributes on TR element.
-  # I've had varying success styling on that and tend to style on the TH elements instead.
+  describe 'TR attributes' do
+    it 'zebrastripes by default' do
+      captured = capture do
+        tabula_rasa @survivors do |t|
+          t.column :first_name
+        end
+      end
+      rows = extract_all('table tbody tr', captured)
+      # Smoke test
+      rows.size.must_equal 3
+
+      rows[0].attribute('class').value.must_equal 'even'
+      rows[1].attribute('class').value.must_equal 'odd'
+      rows[2].attribute('class').value.must_equal 'even'
+    end
+
+    it 'raises ArgumentError if row is defined more than once' do
+      proc {
+        tabula_rasa @survivors do |t|
+          t.row class: 'foo'
+          t.row class: 'bar'
+        end
+      }.must_raise(ArgumentError)
+    end
+  end
 
   describe 'TD attributes' do
     it 'sets no attributes by default' do
