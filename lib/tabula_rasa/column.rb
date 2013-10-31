@@ -1,6 +1,6 @@
 module TabulaRasa
   class Column
-    delegate :capture, :content_tag, :truncate, to: :base
+    delegate :content_tag, :truncate, to: :base
 
     def initialize(base, *args, &block)
       @base = base
