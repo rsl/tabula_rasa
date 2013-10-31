@@ -2,7 +2,7 @@ require 'tabula_rasa/column'
 
 module TabulaRasa
   class Base
-    attr_reader :collection, :view, :klass, :columns, :options
+    attr_reader :collection
 
     delegate :content_tag, :safe_join, to: :view
 
@@ -26,6 +26,8 @@ module TabulaRasa
     end
 
   private
+
+    attr_reader :view, :klass, :columns, :options
 
     def content
       safe_join [thead, tbody]
