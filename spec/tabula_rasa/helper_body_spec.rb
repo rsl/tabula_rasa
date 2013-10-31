@@ -169,5 +169,23 @@ describe TabulaRasa::Helpers, 'Head Specs' do
       table.attributes.must_be_empty
       body.attributes.must_be_empty
     end
+
+    it 'indicates the table is empty when collection is empty' do
+      @survivors = Survivor.none
+      captured = capture do
+        tabula_rasa @survivors do |t|
+          t.column :first_name
+        end
+      end
+      table = extract_first('table', captured)
+      body = extract_first('table tbody', captured)
+      cells = extract_all('table tbody td', captured)
+
+      cells.size.must_equal 1
+      cell = cells.first
+      cell.children.size.must_equal 1
+      cell.children.first.must_be :text?
+      cell.text.must_equal 'No survivors present'
+    end
   end
 end

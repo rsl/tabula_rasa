@@ -59,6 +59,14 @@ module TabulaRasa
       safe_join rows
     end
 
+    def empty_body
+      content_tag :tr, class: 'empty' do
+        content_tag :td, colspan: columns.size do
+          "No #{klass.table_name.downcase} present"
+        end
+      end
+    end
+
     def table_options
       options.except :head, :body
     end
