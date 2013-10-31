@@ -35,8 +35,9 @@ describe TabulaRasa::Helpers, 'Head Specs' do
     end
   end
 
-  # NOTE: For now, I don't see the point of adding attributes on TR element.
+  # NOTE: For now, I don't see the point of adding attributes on TR element on THEAD.
   # I've had varying success styling on that and tend to style on the TH elements instead.
+  # Also, unlike TBODY, there's only one row so... it's THEAD TR. Done!
 
   describe 'TH attributes' do
     it 'sets no attributes by default' do
