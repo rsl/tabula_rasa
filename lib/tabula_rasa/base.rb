@@ -4,7 +4,7 @@ module TabulaRasa
   class Base
     attr_reader :collection, :view, :klass, :columns, :options
 
-    delegate :capture, :content_tag, :safe_join, :truncate, to: :view
+    delegate :content_tag, :safe_join, to: :view
 
     def initialize(collection, view, options = {}, &block)
       raise ArgumentError, 'TabulaRasa only works on ActiveRecord Relation instances' unless collection.is_a?(ActiveRecord::Relation)

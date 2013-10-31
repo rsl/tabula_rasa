@@ -1,6 +1,6 @@
 module TabulaRasa
   class Column
-    delegate :content_tag, :truncate, to: :base
+    delegate :content_tag, to: :base
 
     def initialize(base, *args, &block)
       @base = base
@@ -63,8 +63,7 @@ module TabulaRasa
       if value.respond_to?(:call)
         value.call(instance)
       else
-        # TODO: Make truncation optional
-        truncate value.to_s
+        value.to_s
       end
     end
   end
