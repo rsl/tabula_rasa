@@ -23,7 +23,7 @@ module TabulaRasa
       content_tag :td, body_value_for(instance), options[:body]
     end
 
-    def body(&block)
+    def value(&block)
       @body_value_option = block if block_given?
     end
 

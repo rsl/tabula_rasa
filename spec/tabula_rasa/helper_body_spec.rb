@@ -128,7 +128,7 @@ describe TabulaRasa::Helpers, 'Head Specs' do
       captured = capture do
         tabula_rasa @survivors do |t|
           t.column :whole_name do |c|
-            c.body do |instance|
+            c.value do |instance|
               "#{instance.first_name} #{instance.last_name}"
             end
           end
@@ -146,7 +146,7 @@ describe TabulaRasa::Helpers, 'Head Specs' do
       captured = capture do
         tabula_rasa @survivors do |t|
           t.column :whole_name, body: {id: 'id_value', class: 'class_value', arbitrary: 'arbitrary_value', value: 'Overridden Value'} do |c|
-            c.body do |instance|
+            c.value do |instance|
               "#{instance.first_name} #{instance.last_name}"
             end
           end

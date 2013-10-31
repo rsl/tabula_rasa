@@ -30,7 +30,7 @@ describe TabulaRasa::Helpers, 'Integrated [Head and Body] Specs' do
     captured = capture do
       tabula_rasa @survivors do |t|
         t.column :whole_name do |c|
-          c.body do |instance|
+          c.value do |instance|
             "#{instance.first_name} #{instance.last_name}"
           end
         end
