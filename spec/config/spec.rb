@@ -3,6 +3,7 @@ class TabulaRasa::Spec < MiniTest::Spec
   include ActionView::Helpers::TagHelper
   include ActionView::Helpers::TextHelper
   include ActionView::Helpers::OutputSafetyHelper
+  include ActionView::RecordIdentifier
   include TabulaRasa::Helpers
 
   attr_accessor :output_buffer

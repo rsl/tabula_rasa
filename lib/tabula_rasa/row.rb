@@ -3,7 +3,7 @@ module TabulaRasa
     # NOTE: Need to handle ALL valid HTML5 attributes
     ATTRIBUTES = [:id, :class]
 
-    delegate :cycle, to: :base
+    delegate :cycle, :dom_id, :dom_class, to: :base
 
     def initialize(base, options = {}, &block)
       @base = base
@@ -13,8 +13,8 @@ module TabulaRasa
 
     def options_for(instance)
       {
-        id: [id_value_for(instance)].join(' ').squish,
-        class: [class_value_for(instance), zebrastripe].join(' ').squish
+        id: [id_value_for(instance), dom_id_for(instance)].compact.join(' ').squish,
+        class: [class_value_for(instance), zebrastripe, dom_class_for(instance)].compact.join(' ').squish
       }.merge data_values_for(instance)
     end
 
@@ -44,6 +44,15 @@ module TabulaRasa
       else
         raise ArgumentError, "Invalid value for options[:zebra]: #{base.options[:zebra]}. Should be array."
       end
+    end
+
+    def dom_id_for(instance)
+      return unless base.options[:dom_id] == true
+      dom_id(instance) unless id_value_for(instance).present?
+    end
+
+    def dom_class_for(instance)
+      dom_class(instance) if base.options[:dom_class] == true
     end
 
     def data_values_for(instance)

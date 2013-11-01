@@ -57,9 +57,9 @@ describe TabulaRasa::Helpers, 'Head Specs' do
       end
       rows = extract_all('table tbody tr', captured)
 
-      rows[0].attribute('class').value.must_be_empty
-      rows[1].attribute('class').value.must_be_empty
-      rows[2].attribute('class').value.must_be_empty
+      rows.each do |row|
+        row.attribute('class').value.must_be_empty
+      end
     end
 
     it 'can customize zebrastripes' do
@@ -70,9 +70,9 @@ describe TabulaRasa::Helpers, 'Head Specs' do
       end
       rows = extract_all('table tbody tr', captured)
 
-      rows[0].attribute('class').value.must_equal 'foo'
-      rows[1].attribute('class').value.must_equal 'bar'
-      rows[2].attribute('class').value.must_equal 'foo'
+      rows[0].attribute('class').value.must_match /foo/
+      rows[1].attribute('class').value.must_match /bar/
+      rows[2].attribute('class').value.must_match /foo/
     end
 
     it 'raises ArgumentError when invalid zebra option given' do
@@ -81,6 +81,50 @@ describe TabulaRasa::Helpers, 'Head Specs' do
           t.column :first_name
         end
       }.must_raise ArgumentError
+    end
+
+    it 'can set dom_id via option on the main method' do
+      captured = capture do
+        tabula_rasa @survivors, dom_id: true do |t|
+          t.column :first_name
+        end
+      end
+      rows = extract_all('table tbody tr', captured)
+
+      rows.each_with_index do |row, n|
+        row.attribute('id').value.must_equal "survivor_#{@survivors[n].id}"
+      end
+    end
+
+    it 'overrides dom_id option when id is explicitly set on row' do
+      captured = capture do
+        tabula_rasa @survivors, dom_id: true do |t|
+          t.column :first_name
+          t.row do |r|
+            r.id do |instance|
+              "manual_#{instance.id}"
+            end
+          end
+        end
+      end
+      rows = extract_all('table tbody tr', captured)
+
+      rows.each_with_index do |row, n|
+        row.attribute('id').value.must_equal "manual_#{@survivors[n].id}"
+      end
+    end
+
+    it 'can set dom_class via option on the main method' do
+      captured = capture do
+        tabula_rasa @survivors, dom_class: true do |t|
+          t.column :first_name
+        end
+      end
+      rows = extract_all('table tbody tr', captured)
+
+      rows.each_with_index do |row, n|
+        row.attribute('class').value.must_match dom_class(@survivors[n])
+      end
     end
 
     it 'can set attributes via options on internal row method' do
@@ -119,6 +163,7 @@ describe TabulaRasa::Helpers, 'Head Specs' do
         end
       end
       rows = extract_all('table tbody tr', captured)
+
       rows.each_with_index do |row, n|
         row.attribute('id').value.must_match "survivor_id_#{@survivors[n].id}"
         row.attribute('class').value.must_match "survivor_class_#{@survivors[n].id}"
