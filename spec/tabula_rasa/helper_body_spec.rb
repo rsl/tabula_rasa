@@ -43,12 +43,92 @@ describe TabulaRasa::Helpers, 'Head Specs' do
         end
       end
       rows = extract_all('table tbody tr', captured)
-      # Smoke test
-      rows.size.must_equal 3
 
       rows[0].attribute('class').value.must_equal 'even'
       rows[1].attribute('class').value.must_equal 'odd'
       rows[2].attribute('class').value.must_equal 'even'
+    end
+
+    it 'can disable zebrastripes' do
+      captured = capture do
+        tabula_rasa @survivors, zebra: false do |t|
+          t.column :first_name
+        end
+      end
+      rows = extract_all('table tbody tr', captured)
+
+      rows[0].attribute('class').value.must_be_empty
+      rows[1].attribute('class').value.must_be_empty
+      rows[2].attribute('class').value.must_be_empty
+    end
+
+    it 'can customize zebrastripes' do
+      captured = capture do
+        tabula_rasa @survivors, zebra: %w{foo bar} do |t|
+          t.column :first_name
+        end
+      end
+      rows = extract_all('table tbody tr', captured)
+
+      rows[0].attribute('class').value.must_equal 'foo'
+      rows[1].attribute('class').value.must_equal 'bar'
+      rows[2].attribute('class').value.must_equal 'foo'
+    end
+
+    it 'raises ArgumentError when invalid zebra option given' do
+      proc {
+        tabula_rasa @survivors, zebra: 'string' do |t|
+          t.column :first_name
+        end
+      }.must_raise ArgumentError
+    end
+
+    it 'can set attributes via options on internal row method' do
+      captured = capture do
+        tabula_rasa @survivors do |t|
+          t.column :first_name
+          t.row class: 'useless_row_class_for_testing'
+        end
+      end
+      rows = extract_all('table tbody tr', captured)
+      rows.each do |row|
+        row.attribute('class').value.must_match /useless_row_class_for_testing/
+      end
+
+      # Zebrastripes should still work as well
+      rows[0].attribute('class').value.must_match /even/
+      rows[1].attribute('class').value.must_match /odd/
+      rows[2].attribute('class').value.must_match /even/
+    end
+
+    it 'can set attributes via block on internal row method' do
+      captured = capture do
+        tabula_rasa @survivors do |t|
+          t.column :first_name
+          t.row do |r|
+            r.id do |instance|
+              "survivor_id_#{instance.id}"
+            end
+            r.class do |instance|
+              "survivor_class_#{instance.id}"
+            end
+            r.data :foo do |instance|
+              "foo_#{instance.id}"
+            end
+          end
+        end
+      end
+      rows = extract_all('table tbody tr', captured)
+      rows.each_with_index do |row, n|
+        row.attribute('id').value.must_match "survivor_id_#{@survivors[n].id}"
+        row.attribute('class').value.must_match "survivor_class_#{@survivors[n].id}"
+        row.attribute('data-foo').value.must_match "foo_#{@survivors[n].id}"
+      end
+
+      # Zebrastripes should still work as well
+      rows[0].attribute('class').value.must_match /even/
+      rows[1].attribute('class').value.must_match /odd/
+      rows[2].attribute('class').value.must_match /even/
     end
 
     it 'raises ArgumentError if row is defined more than once' do
@@ -147,7 +227,7 @@ describe TabulaRasa::Helpers, 'Head Specs' do
       body.attributes.must_be_empty
     end
 
-    it 'can override first argument via a Proc argument for internal column method' do
+    it 'can override first argument via a block for internal column method' do
       captured = capture do
         tabula_rasa @survivors do |t|
           t.column :whole_name do |c|
@@ -165,7 +245,7 @@ describe TabulaRasa::Helpers, 'Head Specs' do
       end
     end
 
-    it 'can override first argument via a Proc argument for internal column method while setting attributes via options[:body]' do
+    it 'can override first argument via a block for internal column method while setting attributes via options[:body]' do
       captured = capture do
         tabula_rasa @survivors do |t|
           t.column :whole_name, body: {id: 'id_value', class: 'class_value', arbitrary: 'arbitrary_value', value: 'Overridden Value'} do |c|

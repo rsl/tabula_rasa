@@ -116,7 +116,7 @@ describe TabulaRasa::Helpers, 'Head Specs' do
       head.attributes.must_be_empty
     end
 
-    it 'raises ArgumentError if attempting to override content via a proc [as body can]' do
+    it 'raises ArgumentError if attempting to override content via a block [as body can]' do
       proc {
         tabula_rasa @survivors do |t|
           t.column :first_name do |c|

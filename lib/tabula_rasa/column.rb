@@ -61,7 +61,7 @@ module TabulaRasa
     def body_value_for(instance)
       value = body_value_option || instance.send(attribute)
       if value.respond_to?(:call)
-        value.call(instance)
+        value.call instance
       else
         value.to_s
       end

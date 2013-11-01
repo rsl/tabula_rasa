@@ -26,7 +26,7 @@ describe TabulaRasa::Helpers, 'Integrated [Head and Body] Specs' do
     end
   end
 
-  it 'can override body values via proc while using attribute argument for head value' do
+  it 'can override body values via a block while using attribute argument for head value' do
     captured = capture do
       tabula_rasa @survivors do |t|
         t.column :whole_name do |c|

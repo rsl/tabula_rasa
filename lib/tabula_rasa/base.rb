@@ -3,7 +3,7 @@ require 'tabula_rasa/column'
 
 module TabulaRasa
   class Base
-    attr_reader :collection
+    attr_reader :collection, :options
 
     delegate :content_tag, :cycle, :safe_join, to: :view
 
@@ -34,7 +34,7 @@ module TabulaRasa
 
   private
 
-    attr_reader :view, :klass, :columns, :options
+    attr_reader :view, :klass, :columns
 
     def content
       safe_join [thead, tbody]
@@ -56,7 +56,7 @@ module TabulaRasa
 
     def collection_body
       rows = collection.map do |member|
-        content_tag :tr, @row.options do
+        content_tag :tr, @row.options_for(member) do
           cells = columns.map do |column|
             column.body_content_for member
           end

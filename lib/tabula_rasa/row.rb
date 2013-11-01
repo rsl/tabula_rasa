@@ -1,5 +1,8 @@
 module TabulaRasa
   class Row
+    # NOTE: Need to handle ALL valid HTML5 attributes
+    ATTRIBUTES = [:id, :class]
+
     delegate :cycle, to: :base
 
     def initialize(base, options = {}, &block)
@@ -8,14 +11,59 @@ module TabulaRasa
       yield self if block_given?
     end
 
-    def options
+    def options_for(instance)
       {
-        class: cycle(*%w{even odd})
-      }
+        id: [id_value_for(instance)].join(' ').squish,
+        class: [class_value_for(instance), zebrastripe].join(' ').squish
+      }.merge data_values_for(instance)
+    end
+
+    def data(key, &block)
+      options[:data] ||= {}
+      options[:data][key] = block
+    end
+
+    ATTRIBUTES.each do |attribute|
+      define_method attribute do |&block|
+        options[attribute] = block
+      end
     end
 
   private
 
-    attr_reader :base
+    attr_reader :base, :options
+
+    def zebrastripe
+      case base.options[:zebra]
+      when false
+        # Nothing
+      when nil
+        cycle *%w{even odd}
+      when Array
+        cycle *base.options[:zebra]
+      else
+        raise ArgumentError, "Invalid value for options[:zebra]: #{base.options[:zebra]}. Should be array."
+      end
+    end
+
+    def data_values_for(instance)
+      return {} if options[:data].blank?
+      options[:data].inject({}) do |m, x|
+        key, value = x
+        m["data-#{key}"] = value.call(instance)
+        m
+      end
+    end
+
+    ATTRIBUTES.each do |attribute|
+      define_method "#{attribute}_value_for" do |instance|
+        value = options[attribute]
+        if value.respond_to?(:call)
+          value.call instance
+        else
+          value.to_s
+        end
+      end
+    end
   end
 end
