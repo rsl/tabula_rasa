@@ -100,7 +100,7 @@ Most use cases for overriding the body value though would be better served by us
       end
     end
 
-A lot of the time though you should just be able to get by with a simple symbol argument, since you aren't limited to simple
+A lot of the time though you should just be able to get by with a simple symbol argument, since you aren't limited to simple attributes but can use methods that massage attribute data.
 
     tabula_rasa @collection do |table|
       t.column :foo
