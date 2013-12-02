@@ -335,5 +335,22 @@ describe TabulaRasa::Helpers, 'Head Specs' do
       cell.children.first.must_be :text?
       cell.text.must_equal 'No survivors present'
     end
+
+    it 'can use multiple single arguments via internal columns method to set multiple columns' do
+      captured = capture do
+        tabula_rasa @survivors do |t|
+          t.columns :first_name, :last_name
+        end
+      end
+      rows = extract_all('table tbody tr', captured)
+
+      rows.each_with_index do |row, n|
+        survivor = @survivors[n]
+        cells = row.search('td')
+        cells.size.must_equal 2
+        cells[0].text.must_equal survivor.first_name
+        cells[1].text.must_equal survivor.last_name
+      end
+    end
   end
 end

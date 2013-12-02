@@ -13,18 +13,24 @@ module TabulaRasa
       @options = options
       @view = view
       @klass = collection.klass
-      @columns = []
+      @column_collection = []
       yield self if block_given?
       ensure_row
     end
 
     def render
-      return if columns.empty?
+      return if column_collection.empty?
       content_tag :table, content, table_options
     end
 
     def column(*args, &block)
-      @columns << Column.new(self, *args, &block)
+      @column_collection << Column.new(self, *args, &block)
+    end
+
+    def columns(*args)
+      args.each do |arg|
+        @column_collection << Column.new(self, arg)
+      end
     end
 
     def row(options = {}, &block)
@@ -34,7 +40,7 @@ module TabulaRasa
 
   private
 
-    attr_reader :view, :klass, :columns
+    attr_reader :view, :klass, :column_collection
 
     def content
       safe_join [thead, tbody]
@@ -43,7 +49,7 @@ module TabulaRasa
     def thead
       content_tag :thead, options[:head] do
         content_tag :tr do
-          safe_join columns.map(&:head_content)
+          safe_join column_collection.map(&:head_content)
         end
       end
     end
@@ -57,7 +63,7 @@ module TabulaRasa
     def collection_body
       rows = collection.map do |member|
         content_tag :tr, @row.options_for(member) do
-          cells = columns.map do |column|
+          cells = column_collection.map do |column|
             column.body_content_for member
           end
           safe_join cells
@@ -68,7 +74,7 @@ module TabulaRasa
 
     def empty_body
       content_tag :tr, class: 'empty' do
-        content_tag :td, colspan: columns.size do
+        content_tag :td, colspan: column_collection.size do
           "No #{klass.table_name.downcase} present"
         end
       end
