@@ -75,7 +75,7 @@ module TabulaRasa
     def empty_body
       content_tag :tr, class: 'empty' do
         content_tag :td, colspan: column_collection.size do
-          "No #{klass.table_name.downcase} present"
+          "No #{klass.table_name.humanize.downcase} present"
         end
       end
     end
